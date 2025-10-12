@@ -389,13 +389,3 @@ def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float
     return f"{symbol}: date={latest.date} prob_up={prob_up:.3f} signal={signal} model={os.path.basename(path)}"
 
 
-# ---------------------------
-# Task 5: Run Full Pipeline
-# ---------------------------
-@shared_task
-def run_full_pipeline(symbol: str = "AAPL"):
-    """
-    Runs the entire pipeline for a given symbol:
-    fetch_prices → build_features → train_model → predict_next_day
-    """
-
