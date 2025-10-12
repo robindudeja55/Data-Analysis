@@ -372,20 +372,4 @@ def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float
         signal = "HOLD"
 
     ta = bundle.get("trained_at")
-    try:
-        from datetime import datetime, timezone as dtz
-        trained_at = datetime.strptime(ta, "%Y%m%d%H%M%S").replace(tzinfo=dtz.utc) if ta else timezone.now()
-    except Exception:
-        trained_at = timezone.now()
-
-    Prediction.objects.update_or_create(
-        instrument=inst,
-        date=latest.date,
-        model_name="logreg",
-        defaults=dict(prob_up=prob_up, signal=signal, trained_at=trained_at),
-    )
-
-    logger.info("predict.done symbol=%s date=%s prob_up=%.3f signal=%s", symbol, latest.date, prob_up, signal)
-    return f"{symbol}: date={latest.date} prob_up={prob_up:.3f} signal={signal} model={os.path.basename(path)}"
-
-
+    
