@@ -340,36 +340,3 @@ def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float
     except Exception as e:
         logger.error("predict.load_failed symbol=%s err=%s", symbol, e)
         return f"Failed to load model: {e}"
-
-    values = []
-    missing = []
-    for f in features:
-        v = getattr(latest, f, None)
-        if v is None:
-            missing.append(f)
-        else:
-            values.append(float(v))
-    if missing:
-        msg = f"Latest feature row missing fields {missing} for {symbol}"
-        logger.warning("predict.missing_fields symbol=%s missing=%s", symbol, missing)
-        return msg
-
-    try:
-        if hasattr(model, "predict_proba"):
-            prob_up = float(model.predict_proba([values])[0][1])
-        else:
-            y = model.decision_function([values])
-            prob_up = float(1 / (1 + np.exp(-y)))
-    except Exception as e:
-        logger.error("predict.infer_failed symbol=%s err=%s", symbol, e)
-        return f"Inference failed: {e}"
-
-    if prob_up >= thr_up:
-        signal = "UP"
-    elif prob_up <= thr_down:
-        signal = "DOWN"
-    else:
-        signal = "HOLD"
-
-    ta = bundle.get("trained_at")
-    
