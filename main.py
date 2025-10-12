@@ -313,9 +313,7 @@ def _latest_model_path(symbol: str, model_dir: str | None = None) -> str | None:
     return files[0] if files else None
 
 
-# ---------------------------
-# Task 4: Predict Next Day
-# ---------------------------
+
 @shared_task
 def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float = 0.45):
     logger.info("predict.start symbol=%s", symbol)
