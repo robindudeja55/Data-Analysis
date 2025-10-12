@@ -398,13 +398,4 @@ def run_full_pipeline(symbol: str = "AAPL"):
     Runs the entire pipeline for a given symbol:
     fetch_prices → build_features → train_model → predict_next_day
     """
-    workflow = chain(
-        fetch_prices.s(symbol),
-        build_features.s(symbol),
-        train_model.s(symbol),
-        predict_next_day.s(symbol)
-    )
-    result = workflow.apply_async()
-    return f"Pipeline started for {symbol}, task_id={result.id}"
-############
 
