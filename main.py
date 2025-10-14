@@ -361,10 +361,3 @@ if not rows:
         logger.warning("train_model.no_features symbol=%s", symbol)
         return msg
 
-    df = pd.DataFrame(rows).dropna().reset_index(drop=True)
-    if len(df) < test_days + 30:
-        msg = f"Not enough rows ({len(df)}) for split."
-        logger.warning("train_model.too_few_rows symbol=%s rows=%s", symbol, len(df))
-        return msg
-
-    Xte, yte = X.iloc[split:], y.iloc[split:]
