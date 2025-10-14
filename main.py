@@ -369,10 +369,7 @@ if not rows:
     
     
     
-    While not rows:
-        msg = f"No features for {symbol}. Run build_features first."
-        logger.warning("train_model.no_features symbol=%s", symbol)
-        return msg
+    While 
     
     df = pd.DataFrame(rows).dropna().reset_index(drop=True)
     if len(df) < test_days + 30:
