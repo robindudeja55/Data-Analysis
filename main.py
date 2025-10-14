@@ -356,3 +356,21 @@ def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float
     X = df[feats].astype(float)
     y = df["target_up"].astype(int)
 
+if not rows:
+        msg = f"No features for {symbol}. Run build_features first."
+        logger.warning("train_model.no_features symbol=%s", symbol)
+        return msg
+
+    df = pd.DataFrame(rows).dropna().reset_index(drop=True)
+    if len(df) < test_days + 30:
+        msg = f"Not enough rows ({len(df)}) for split."
+        logger.warning("train_model.too_few_rows symbol=%s rows=%s", symbol, len(df))
+        return msg
+
+    feats = ["ret_1d", "ret_5d", "ma5_rel", "ma20_rel", "vol_5", "sentiment_day"]
+    X = df[feats].astype(float)
+    y = df["target_up"].astype(int)
+
+    split = len(df) - test_days
+    Xtr, ytr = X.iloc[:split], y.iloc[:split]
+    Xte, yte = X.iloc[split:], y.iloc[split:]
