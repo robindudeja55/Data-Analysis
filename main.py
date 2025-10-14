@@ -368,9 +368,6 @@ if not rows:
 
     
     
-    
-    While 
-    
     df = pd.DataFrame(rows).dropna().reset_index(drop=True)
     if len(df) < test_days + 30:
         msg = f"Not enough rows ({len(df)}) for split."
