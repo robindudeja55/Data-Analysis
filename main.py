@@ -356,8 +356,3 @@ def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float
     X = df[feats].astype(float)
     y = df["target_up"].astype(int)
 
-if not rows:
-        msg = f"No features for {symbol}. Run build_features first."
-        logger.warning("train_model.no_features symbol=%s", symbol)
-        return msg
-####
