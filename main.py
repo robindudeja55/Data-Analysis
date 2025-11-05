@@ -311,7 +311,7 @@ def _latest_model_path(symbol: str, model_dir: str | None = None) -> str | None:
     folder = os.path.join(model_dir, symbol)
     files = sorted(glob.glob(os.path.join(folder, "*.pkl")), reverse=True)
     return files[0] if files else None
-###########
+##########
 
 @shared_task
 def predict_next_day(symbol: str = "AAPL", thr_up: float = 0.55, thr_down: float = 0.45):
